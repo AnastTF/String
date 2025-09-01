@@ -236,12 +236,42 @@ bool operator!= (const String& left, const String& right)
     return !(left == right);
 }
 
-Iterator* String::createIterator() const
+String::StringIterator::StringIterator(const String* vl_ptr): ptr(vl_ptr)
+{}
+
+void String::StringIterator::first()  
+{ 
+    indx = 0; 
+}
+
+void String::StringIterator::next()  
+{ 
+    indx++; 
+}
+
+bool String::StringIterator::IsEnd() const  
+{ 
+    return indx >= ptr->size(); 
+}
+
+char String::StringIterator::CurrentItem() const 
 {
-    return new StringIterator(this);
+    if(IsEnd())
+        throw IndxOutOfRange();
+    return ptr->Get(indx);
 }
 
 const char& String::Get(const size_t indx) const
 {
     return at(indx);
+}
+
+String::StringIterator* String::begin() noexcept
+{
+    return new String::StringIterator(this);
+}
+
+String::StringIterator* String::end() noexcept
+{
+    return new String::StringIterator(nullptr);
 }

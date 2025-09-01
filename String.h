@@ -3,16 +3,6 @@
 #include <iostream>
 #include "Exception.h"
 
-class String;
-
-class Iterator{
-public:
-    virtual void next() = 0;
-    virtual void first() = 0;
-    virtual bool IsEnd() const = 0;
-    virtual char CurrentItem() const = 0;
-};
-
 class String{
     enum {
         start_length_array = 8, // init length of string
@@ -64,28 +54,26 @@ public:
     friend bool operator== (const String& left, const String& right);
     friend bool operator== (const String& left, const char* right);
     friend bool operator!= (const String& left, const String& right);
-
-    Iterator* createIterator() const;
-    const char& Get(const size_t indx) const;
 private:
     void resize(size_t new_size);
+private:
+    class StringIterator{
+        unsigned indx {0};
+        const String* ptr;
+    public:
+        StringIterator(const String* vl_ptr);
+        void first();
+        void next();
+        bool IsEnd() const;
+        char CurrentItem() const;
+        };
+        
+public:
+    StringIterator* begin() noexcept;
+    StringIterator* end() noexcept;
+    const char& Get(const size_t indx) const;
 };
 
-class StringIterator: public Iterator{
-    unsigned indx {0};
-    const String* ptr;
-public:
-    StringIterator(const String* vl_ptr): ptr(vl_ptr)
-    {}
-    void first() override { indx = 0; }
-    void next() override { indx++; }
-    bool IsEnd() const override { return indx >= ptr->size(); }
-    char CurrentItem() const override
-    {
-        if(IsEnd())
-            throw IndxOutOfRange();
-        return ptr->Get(indx);
-    }
-};
+
 
 #endif
