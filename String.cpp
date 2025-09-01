@@ -121,6 +121,22 @@ bool String::empty() const noexcept
     return !(length);
 }
 
+String& String::append (const String& other)
+{
+    for(int i = 0; i != other.size(); ++i)
+        push_back(other.str[i]);
+    return *this;
+}
+
+String& String::append (const char* s)
+{
+    if(s == nullptr)
+        throw std::logic_error("Invalid argument append");
+    for(int i = 0; i != strlen(s); ++i)
+        push_back(s[i]);
+    return *this;
+}
+
 String::Item String::operator[](int indx)
 {
     return String::Item(this, indx);
@@ -152,21 +168,13 @@ char String::Item::operator=(char ch) const
     return ch;
 }
 
-String& String::append (const String& other)
+char& String::at(const size_t pos) const
 {
-    for(int i = 0; i != other.size(); ++i)
-        push_back(other.str[i]);
-    return *this;
+    if(pos > length)
+        throw std::out_of_range("String: at() out of range");
+    return str[pos];
 }
 
-String& String::append (const char* s)
-{
-    if(s == nullptr)
-        throw std::logic_error("Invalid argument append");
-    for(int i = 0; i != strlen(s); ++i)
-        push_back(s[i]);
-    return *this;
-}
 
 String& String::operator+= (const String& other)
 {
@@ -226,4 +234,14 @@ bool operator== (const String& left, const char* right)
 bool operator!= (const String& left, const String& right)
 {
     return !(left == right);
+}
+
+Iterator* String::createIterator() const
+{
+    return new StringIterator(this);
+}
+
+const char& String::Get(const size_t indx) const
+{
+    return at(indx);
 }
