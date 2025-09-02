@@ -39,6 +39,11 @@ size_t String::size() const noexcept
     return length;
 }
 
+size_t String::get_capacity() const noexcept
+{
+    return capacity;
+}
+
 const char* String::data() const noexcept
 {
     return str;
@@ -123,8 +128,8 @@ bool String::empty() const noexcept
 
 String& String::append (const String& other)
 {
-    for(int i = 0; i != other.size(); ++i)
-        push_back(other.str[i]);
+    for(auto iter = other.begin(); !iter->IsEnd(); iter->next())
+        push_back(iter->CurrentItem());
     return *this;
 }
 
@@ -236,6 +241,27 @@ bool operator!= (const String& left, const String& right)
     return !(left == right);
 }
 
+std::ostream& operator<< (std::ostream& os, const String& other)
+{
+    os << other.str;
+    return os;
+}
+
+std::istream& operator>> (std::istream& is, String& other)
+{
+    char temp[80];
+    is.get(temp, 80);
+    if (is)
+    {
+         other = temp;
+    }
+    while (is && is.get() != '\n')
+    {
+        continue;
+    }
+    return is;
+}
+
 String::StringIterator::StringIterator(const String* vl_ptr): ptr(vl_ptr)
 {}
 
@@ -266,12 +292,7 @@ const char& String::Get(const size_t indx) const
     return at(indx);
 }
 
-String::StringIterator* String::begin() noexcept
+String::StringIterator* String::begin() const noexcept
 {
     return new String::StringIterator(this);
-}
-
-String::StringIterator* String::end() noexcept
-{
-    return new String::StringIterator(nullptr);
 }

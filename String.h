@@ -29,6 +29,7 @@ public:
     ~String();
 
     size_t size() const noexcept;
+    size_t get_capacity() const noexcept;
     void clear() noexcept;
     bool empty() const noexcept;
     const char* data() const noexcept;
@@ -54,6 +55,10 @@ public:
     friend bool operator== (const String& left, const String& right);
     friend bool operator== (const String& left, const char* right);
     friend bool operator!= (const String& left, const String& right);
+
+    friend std::ostream& operator<< (std::ostream& os, const String& other);
+    friend std::istream& operator>> (std::istream& is, String& other);
+
 private:
     void resize(size_t new_size);
 private:
@@ -69,8 +74,7 @@ private:
         };
         
 public:
-    StringIterator* begin() noexcept;
-    StringIterator* end() noexcept;
+    StringIterator* begin() const noexcept;
     const char& Get(const size_t indx) const;
 };
 
