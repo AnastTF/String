@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string.h>
+#include <vector>
 #include "String.h"
 
 int main()
@@ -11,7 +12,10 @@ int main()
         v.push_back(s);
 
     std::sort(v.begin(), v.end(), [](const String& str1, const String& str2) 
-                                    { return strcasecmp(str1.data(), str2.data()) < 0; });
+                                    { return strcasecmp(str1.data(), str2.data()) > 0; });
 
+    
+    for(const auto& str: v)
+        std::cout << str << std::endl;                       
     return 0;
 }
