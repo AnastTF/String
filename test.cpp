@@ -136,17 +136,7 @@ TEST(TestGroupName, test_clear){
     s.clear();
     ASSERT_TRUE(s.size() == 0);
     ASSERT_TRUE(s.get_capacity() == 0);
-    //ASSERT_TRUE(s == "");
-
-    /*String s1(s);
-    ASSERT_TRUE(s1.size() == 0);
-    ASSERT_TRUE(s1.get_capacity() == 0);
-    //ASSERT_TRUE(s1 == "");
-
-    String s2(std::move(s));
-    ASSERT_TRUE(s2.size() == 0);
-    ASSERT_TRUE(s2.get_capacity() == 0);
-    //ASSERT_TRUE(s2 == "");*/
+    ASSERT_TRUE(s.data() == nullptr);
 }
 
 TEST(TestGroupName, test_at){

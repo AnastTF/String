@@ -77,7 +77,4 @@ public:
     StringIterator* begin() const noexcept;
     const char& Get(const size_t indx) const;
 };
-
-
-
 #endif
