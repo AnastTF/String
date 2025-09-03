@@ -50,19 +50,21 @@ public:
 
     String&                 operator +=( const String& other );
     String&                 operator +=( const char* other );
+    String&                 operator +=( const char ch );
 
     friend const String     operator +( const String& left, const String& right );
     friend const String     operator +( const String& left, const char* right );
     friend const String     operator +( const char* left, const String& right );
 
     bool                    operator <( const String& other ) const;
+    bool                    operator >( const String& other ) const;
     friend bool             operator ==( const String& left, const String& right );
     friend bool             operator ==( const String& left, const char* right );
     friend bool             operator !=( const String& left, const String& right );
 
     friend std::ostream&    operator <<( std::ostream& os, const String& other );
     friend std::istream&    operator >>( std::istream& is, String& other );
-
+    String                  toLower() const;
 private:
     void                    resize( size_t new_size );
 private:

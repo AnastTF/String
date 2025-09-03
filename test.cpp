@@ -110,6 +110,7 @@ TEST(TestGroupName, test_push_back){
 
     ASSERT_TRUE(s1.size() == 17);
     ASSERT_TRUE(s1.get_capacity() == 28);
+    ASSERT_TRUE(s1 == "Hello my friend!!");
 }
 
 TEST(TestGroupName, set_append){
@@ -144,6 +145,11 @@ TEST(TestGroupName, test_at){
 
     ASSERT_TRUE(s.at(4) == 'o');
     ASSERT_TRUE(s.at(5) == '\0');
+}
+
+TEST(TestGroupName, test_toLower){
+    String s("HelLo, WorlD");
+    ASSERT_EQ(s.toLower(), "hello, world");
 }
 
 int main(int argc, char **argv)

@@ -201,6 +201,12 @@ String& String::operator +=( const char* other )
     return append( other );
 }
 
+String& String::operator +=( const char ch )
+{
+    push_back(ch);
+    return *this;
+}
+
 const String operator +( const String& left, const String& right )
 {
     String str_result;
@@ -234,6 +240,11 @@ bool String::operator <( const String& other ) const
     return ( strncmp( str, other.str, cmp_len ) < 0 );
 }
 
+bool String::operator >( const String& other ) const
+{
+    return !( *this < other );
+}
+
 bool operator ==( const String& left, const String& right )
 {
     auto left_sz = left.length;
@@ -245,7 +256,7 @@ bool operator ==( const String& left, const String& right )
     if( left.str == nullptr || right.str == nullptr )
         return false;
     
-    return !( strcmp( left.str, right.str ) );
+    return !( strncmp( left.str, right.str, std::min(left_sz, right_sz) ) );
 }
 
 bool operator ==( const String& left, const char* right )
@@ -276,6 +287,19 @@ std::istream& operator >>( std::istream& is, String& other )
         continue;
 
     return is;
+}
+
+String String::toLower() const
+{
+    if( !str )
+        return String();
+    
+    String str_to_lower;
+
+    for( auto iter = begin(); !iter->IsEnd(); iter->next() )
+        str_to_lower += std::tolower(iter->CurrentItem());
+    
+    return str_to_lower;
 }
 
 String::StringIterator::StringIterator( const String* vl_ptr ) : ptr( vl_ptr )

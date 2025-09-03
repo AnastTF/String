@@ -52,6 +52,7 @@
         "optional": "cpp",
         "iomanip": "cpp",
         "cinttypes": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "list": "cpp"
     }
 }
