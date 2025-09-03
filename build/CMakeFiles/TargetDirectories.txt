@@ -1,0 +1,3 @@
+/home/anastasia/Visual Studio/code/String/build/CMakeFiles/example.dir
+/home/anastasia/Visual Studio/code/String/build/CMakeFiles/edit_cache.dir
+/home/anastasia/Visual Studio/code/String/build/CMakeFiles/rebuild_cache.dir
