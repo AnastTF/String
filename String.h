@@ -17,14 +17,6 @@ class String{
     size_t                  length      {0};
     size_t                  capacity    {0};
     
-    class Item{ 
-        String*             current     {nullptr};
-        int                 indx        {-1};
-    public:
-                            Item( String* obj, int indx ) : current( obj ), indx( indx )                {}
-                            operator char() const;
-                            char operator =( char ch ) const;
-    };
 public:
                             String();  
                             String( const String& other );
@@ -45,7 +37,8 @@ public:
     void                    pop_back();
     String&                 append( const String& other );
     String&                 append( const char* s );
-    Item                    operator[]( int indx );
+    char&                   operator[]( const int indx );
+    const char&             operator[]( const int indx ) const ;
     char&                   at( const size_t pos ) const;
 
     String&                 operator +=( const String& other );

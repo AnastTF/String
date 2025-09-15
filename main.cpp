@@ -22,14 +22,12 @@
 
 int main()
 {
-    String s1 = "Hello";
-    /*s1.append(",");
-    s1.append(" World!");*/
-    String s2;
-    s2.append(s1);
-    s2.append(", World!");
-    s2.append(s2);
-    auto s3 = s2.append(s2);
+    /*const std::string str {"hello, world"};
+    
+    std::cout << str[3] << std::endl;*/
 
+    const String str {"hello, world!"};
+
+    std::cout << str[3] << std::endl;
     return 0;
 }

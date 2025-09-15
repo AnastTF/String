@@ -156,6 +156,18 @@ TEST(TestGroupName, test_sq_brackets2){
     ASSERT_TRUE(str[10] == 'y' && str[17] == 'h' && str[50] == ',');
 }
 
+TEST(TestGroupName, test_sq_brackets3){
+    String str("hello, world?");
+    str[0] = 'H';
+    str[str.size() - 1] = '!';
+    ASSERT_TRUE(str == "Hello, world!");
+}
+
+TEST(TestGroupName, test_sq_brackets4){
+    const String str("hello, world?");
+    ASSERT_TRUE(str[2] == 'l' && str[5] == ',');
+}
+
 TEST(TestGroupName, test_clear){
     String s("IN the year 1878 I took my degree of Doctor of Medicine of the University of London, and proceeded to Netley to go through the course prescribed for surgeons in the army. Having completed my studies there, I was duly attached to the Fifth Northumberland Fusiliers as Assistant Surgeon. ");
     s.clear();

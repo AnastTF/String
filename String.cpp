@@ -163,41 +163,26 @@ String& String::append( const char* s )
     return *this;
 }
 
-String::Item String::operator[]( int indx )
+char& String::operator[]( const int indx )
 {
-    return String::Item( this, indx );
-}
-
-String::Item::operator char() const
-{
-    if( indx > current->length || indx < 0 )
+    if( indx > length || indx < 0 )
         throw std::out_of_range( "String: at() out of range" );
-    
-    return current->str[ indx ];
+
+    return str[indx];
 }
 
-char String::Item::operator =( char ch ) const
+const char& String::operator[]( const int indx ) const 
 {
-    if( indx >= MAX_LENGTH_ARRAY || indx < 0 )
-        return ch; 
- 
-    if( indx >= current->capacity ) 
-        current->resize( indx+1 );
- 
-    for( int i = current->length; i < indx; ++i )
-        current->str[ i ] = '\0';   
- 
-    if( indx >= current->length )
-        current->length = indx + 1; 
- 
-    current->str[ indx ] = ch;
-    
-    return ch;
+    if( indx > length || indx < 0 )
+        throw std::out_of_range( "String: at() out of range" );
+
+    return str[indx];
 }
+
 
 char& String::at( const size_t pos ) const
 {
-    if( pos > length )
+    if( pos > length || pos < 0 )
         throw std::out_of_range( "String: at() out of range" );
     
     return str[ pos ];
