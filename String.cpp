@@ -118,7 +118,7 @@ void String::resize( size_t new_size )
 
     char* p = new char[ capacity ];
     strcpy( p, str );
-    delete str;
+    delete[] str;
     str = p;    
 }
 
@@ -133,9 +133,20 @@ void String::pop_back()
 
 String& String::append( const String& other )
 {
-    for( auto iter = other.begin(); !iter->IsEnd(); iter->next() )
-        push_back( iter->CurrentItem() );
-    
+    if( this == &other ){
+        String new_str( other );
+        new_str.append( other.str );
+
+        *this = new_str;
+    }
+
+    else{
+        resize( length + other.length );
+
+        for( size_t i = 0; i != other.length; ++i )
+            str[length++] = other.str[i];
+    }
+
     return *this;
 }
 
@@ -144,8 +155,10 @@ String& String::append( const char* s )
     if( s == nullptr )
         throw std::logic_error( "Invalid argument append" );
     
-    for( int i = 0; i != strlen( s ); ++i )
-        push_back( s[ i ] );
+    resize(length + strlen( s ));
+    
+    for( size_t i = 0; i != strlen( s ); ++i )
+        str[length++] = s[i]; 
     
     return *this;
 }
@@ -209,16 +222,9 @@ String& String::operator +=( const char ch )
 
 const String operator +( const String& left, const String& right )
 {
-    String str_result;
+    String str_result ( left );
     
-    str_result.length = left.length + right.length;
-    str_result.capacity = str_result.length + 1;
-    str_result.str = new char[ str_result.capacity ];
-    
-    std::memcpy( str_result.str, left.data(), left.size() );
-    std::memcpy( str_result.str + left.size(), right.data(), right.size() );
-    
-    str_result.str[ str_result.length ] = '\0';
+    str_result.append( right );
     
     return str_result;
 }

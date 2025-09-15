@@ -26,7 +26,7 @@ class String{
                             char operator =( char ch ) const;
     };
 public:
-                            String();
+                            String();  
                             String( const String& other );
                             String( const char* other );
                             String( String&& move_other ) noexcept;

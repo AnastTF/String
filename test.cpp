@@ -61,6 +61,13 @@ TEST(TestGroupName, test_plus_operator_2){
     ASSERT_TRUE(String(str1) + str2 == "Hello, World!");
 }
 
+
+TEST(TestGroupName, test_plus_operator_3){
+    char str1[15] {"Hello, World!"};
+    char str2[15] {" Hello, World"};
+    ASSERT_TRUE(str1 + String(str2) == "Hello, World! Hello, World");
+}
+
 TEST(TestGroupName, test_plusEq_operator){
     String str;
     char str1[15] {"Hello, World!"};
@@ -84,6 +91,12 @@ TEST(TestGroupName, test_plusEq_operator_3){
     String s2 = "World";
     s1 += s2;
     ASSERT_TRUE(s1 == "Hello World");
+}
+
+TEST(TestGroupName, test_plusEq_operator_4){
+    String s1 = "Hello ";
+    s1 += s1;
+    ASSERT_TRUE(s1 == "Hello Hello ");
 }
 
 TEST(TestGroupName, test_push_back){
@@ -117,6 +130,18 @@ TEST(TestGroupName, set_append){
     String str("В 1878 году я окончил Лондонский университет, получив звание врача, и сразу же отправился в Нетли, где прошел специальный курс для военных хирургов. ");
     str.append("После окончания занятий я был назначен ассистентом хирурга в Пятый Нортумберлендский стрелковый полк. В то время полк стоял в Индии, и не успел я до него добраться, как вспыхнула вторая война с Афганистаном. Высадившись в Бомбее, я узнал, что мой полк форсировал перевал и продвинулся далеко в глубь неприятельской территории. ");
     ASSERT_TRUE(str == "В 1878 году я окончил Лондонский университет, получив звание врача, и сразу же отправился в Нетли, где прошел специальный курс для военных хирургов. После окончания занятий я был назначен ассистентом хирурга в Пятый Нортумберлендский стрелковый полк. В то время полк стоял в Индии, и не успел я до него добраться, как вспыхнула вторая война с Афганистаном. Высадившись в Бомбее, я узнал, что мой полк форсировал перевал и продвинулся далеко в глубь неприятельской территории. ");
+}
+
+TEST(TestGroupName, set_append2){
+    String str("Hello, world!");
+    str.append(str);
+    ASSERT_TRUE(str == "Hello, world!Hello, world!");
+}
+
+TEST(TestGroupName, set_append3){
+    String str("Hello, world!"); 
+    auto str_res = str.append(str);
+    ASSERT_TRUE(str_res == "Hello, world!Hello, world!");
 }
 
 
