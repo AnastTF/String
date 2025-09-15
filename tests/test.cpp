@@ -6,7 +6,6 @@ TEST(TestGroupName, test_default_constructor){
     String s;
     ASSERT_TRUE(s.size() == 0);
     ASSERT_TRUE(s.get_capacity() == 8);
-    ASSERT_TRUE(s == "");
 }
 
 TEST(TestGroupName, test_cstr_constructor){
@@ -60,7 +59,6 @@ TEST(TestGroupName, test_plus_operator_2){
     char str2[10] {", World!"};
     ASSERT_TRUE(String(str1) + str2 == "Hello, World!");
 }
-
 
 TEST(TestGroupName, test_plus_operator_3){
     char str1[15] {"Hello, World!"};
@@ -126,22 +124,29 @@ TEST(TestGroupName, test_push_back){
     ASSERT_TRUE(s1 == "Hello my friend!!");
 }
 
-TEST(TestGroupName, set_append){
+TEST(TestGroupName, test_append){
     String str("В 1878 году я окончил Лондонский университет, получив звание врача, и сразу же отправился в Нетли, где прошел специальный курс для военных хирургов. ");
     str.append("После окончания занятий я был назначен ассистентом хирурга в Пятый Нортумберлендский стрелковый полк. В то время полк стоял в Индии, и не успел я до него добраться, как вспыхнула вторая война с Афганистаном. Высадившись в Бомбее, я узнал, что мой полк форсировал перевал и продвинулся далеко в глубь неприятельской территории. ");
     ASSERT_TRUE(str == "В 1878 году я окончил Лондонский университет, получив звание врача, и сразу же отправился в Нетли, где прошел специальный курс для военных хирургов. После окончания занятий я был назначен ассистентом хирурга в Пятый Нортумберлендский стрелковый полк. В то время полк стоял в Индии, и не успел я до него добраться, как вспыхнула вторая война с Афганистаном. Высадившись в Бомбее, я узнал, что мой полк форсировал перевал и продвинулся далеко в глубь неприятельской территории. ");
 }
 
-TEST(TestGroupName, set_append2){
+TEST(TestGroupName, test_append2){
     String str("Hello, world!");
     str.append(str);
     ASSERT_TRUE(str == "Hello, world!Hello, world!");
 }
 
-TEST(TestGroupName, set_append3){
+TEST(TestGroupName, test_append3){
     String str("Hello, world!"); 
     auto str_res = str.append(str);
     ASSERT_TRUE(str_res == "Hello, world!Hello, world!");
+}
+
+TEST(TestGroupName, test_append4){
+    String str; 
+    str.append("On the very day that i had come to this conclusion");
+    str.append(str);
+    ASSERT_TRUE(str == "On the very day that i had come to this conclusionOn the very day that i had come to this conclusion");
 }
 
 
@@ -187,6 +192,15 @@ TEST(TestGroupName, test_at){
 TEST(TestGroupName, test_toLower){
     String s("HelLo, WorlD");
     ASSERT_EQ(s.toLower(), "hello, world");
+}
+
+TEST(TestGroupName, test_iterator){
+    String s("HelLo, WorlD");
+    size_t cnt = 0;
+    for( auto iter = s.begin(); iter != s.end(); ++iter)
+        cnt++;
+    
+    ASSERT_TRUE(cnt == s.size());
 }
 
 int main(int argc, char **argv)

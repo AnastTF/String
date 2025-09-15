@@ -16,6 +16,36 @@ class String{
     char*                   str         {nullptr};
     size_t                  length      {0};
     size_t                  capacity    {0};
+
+    class Iterator{
+    public:
+        Iterator(char* ptr);
+        virtual ~Iterator();
+        Iterator& operator++();
+
+        Iterator operator++(int);
+        bool operator==(const Iterator& iter) const;
+        bool operator!=(const Iterator& iter) const;
+
+    protected:
+        char* mPtr;
+    };
+
+    class StringIterator: public Iterator{
+    public:
+        StringIterator( char* ptr );
+        ~StringIterator();
+
+        char& operator*();
+    };
+
+    class ConstStringIterator: public Iterator{
+    public:
+        ConstStringIterator( char* ptr );
+        ~ConstStringIterator();
+
+        const char& operator*() const;
+    };
     
 public:
                             String();  
@@ -57,23 +87,15 @@ public:
 
     friend std::ostream&    operator <<( std::ostream& os, const String& other );
     friend std::istream&    operator >>( std::istream& is, String& other );
+
+    StringIterator          begin();
+    StringIterator          end();
+    ConstStringIterator     cbegin() const;
+    ConstStringIterator     cend() const;
+
     String                  toLower() const;
 private:
     void                    resize( size_t new_size );
-private:
-    class StringIterator{
-        unsigned            indx        {0};
-        const String*       ptr;
-    public:
-                            StringIterator( const String* vl_ptr );
-        void                first();
-        void                next();
-        bool                IsEnd() const;
-        char                CurrentItem() const;
-        };
-        
-public:
-    StringIterator*         begin() const noexcept;
-    const char&             Get(const size_t indx) const;
+
 };
 #endif

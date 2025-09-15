@@ -4,9 +4,7 @@
 #include <string>
 #include "String.h"
 
-#include <string>
-
-/*int main()
+int main()
 {
     std::vector<String> v;
     String s;
@@ -18,16 +16,5 @@
    for(const auto& str: v)
         std::cout << str << std::endl;
    return 0;
-}*/
-
-int main()
-{
-    /*const std::string str {"hello, world"};
-    
-    std::cout << str[3] << std::endl;*/
-
-    const String str {"hello, world!"};
-
-    std::cout << str[3] << std::endl;
-    return 0;
 }
+

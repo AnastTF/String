@@ -280,6 +280,78 @@ std::istream& operator >>( std::istream& is, String& other )
     return is;
 }
 
+String::Iterator::Iterator( char* ptr ) : mPtr{ptr}
+{}
+
+String::Iterator::~Iterator()
+{}
+
+String::Iterator& String::Iterator::operator++()
+{
+    this->mPtr++;
+    return *this;
+}
+
+
+String::Iterator String::Iterator::operator++(int)
+{
+    String::Iterator temp = *this;
+    this->mPtr++;
+    return temp;
+}
+
+bool String::Iterator::operator==(const String::Iterator& iter) const
+{
+    return this->mPtr == iter.mPtr;
+}
+
+bool String::Iterator::operator!=(const String::Iterator& iter) const
+{
+    return this->mPtr != iter.mPtr;
+}
+
+String::StringIterator::StringIterator( char* ptr ) : Iterator{ptr}
+{}
+
+String::StringIterator::~StringIterator()
+{}
+
+char& String::StringIterator::operator*()
+{
+    return *this->mPtr;
+}
+
+String::ConstStringIterator::ConstStringIterator( char* ptr ) : Iterator{ptr}
+{}
+
+String::ConstStringIterator::~ConstStringIterator()
+{}
+
+const char& String::ConstStringIterator::operator*() const
+{
+    return *this->mPtr;
+}
+
+String::StringIterator String::begin()
+{
+    return String::StringIterator{this->str};
+}
+
+String::StringIterator String::end()
+{
+    return String::StringIterator{this->str + this->length};
+}
+
+String::ConstStringIterator String::cbegin() const
+{
+    return String::ConstStringIterator{this->str};
+}
+
+String::ConstStringIterator String::cend() const
+{
+    return String::ConstStringIterator{this->str + this->length};
+}
+
 String String::toLower() const
 {
     if( !str )
@@ -287,43 +359,10 @@ String String::toLower() const
     
     String str_to_lower;
 
-    for( auto iter = begin(); !iter->IsEnd(); iter->next() )
-        str_to_lower += std::tolower(iter->CurrentItem());
+    for( auto iter = cbegin(); iter != cend(); iter++ )
+        str_to_lower += std::tolower(*iter);
     
     return str_to_lower;
 }
 
-String::StringIterator::StringIterator( const String* vl_ptr ) : ptr( vl_ptr )
-{}
 
-void String::StringIterator::first()  
-{ 
-    indx = 0; 
-}
-
-void String::StringIterator::next()  
-{ 
-    indx++; 
-}
-
-bool String::StringIterator::IsEnd() const  
-{ 
-    return indx >= ptr->size(); 
-}
-
-char String::StringIterator::CurrentItem() const 
-{
-    if( IsEnd() )
-        throw std::out_of_range( "String: at() out of range" );
-    return ptr->Get( indx );
-}
-
-String::StringIterator* String::begin() const noexcept
-{
-    return new String::StringIterator( this );
-}
-
-const char& String::Get( const size_t indx ) const
-{
-    return at( indx );
-}
