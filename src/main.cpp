@@ -1,8 +1,8 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <string>
 #include "String.h"
+#include <cstring>
 
 int main()
 {

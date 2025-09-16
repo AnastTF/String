@@ -22,8 +22,8 @@ class String{
         Iterator(char* ptr);
         virtual ~Iterator();
         Iterator& operator++();
-
         Iterator operator++(int);
+        
         bool operator==(const Iterator& iter) const;
         bool operator!=(const Iterator& iter) const;
 

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "String.cpp"
+#include <cstring>
 
 TEST(TestGroupName, test_default_constructor){
     String s;
@@ -194,13 +195,22 @@ TEST(TestGroupName, test_toLower){
     ASSERT_EQ(s.toLower(), "hello, world");
 }
 
-TEST(TestGroupName, test_iterator){
+TEST(TestGroupName, test_iterator1){
     String s("HelLo, WorlD");
     size_t cnt = 0;
     for( auto iter = s.begin(); iter != s.end(); ++iter)
         cnt++;
     
     ASSERT_TRUE(cnt == s.size());
+}
+
+TEST(TestGroupName, test_iterator2){
+    String s("HelLo, WorlD");
+    size_t cnt = 0;
+    for( auto iter = s.begin(); iter != s.end(); ++iter)
+        *iter = std::toupper(*iter);
+    
+    ASSERT_TRUE(s == "HELLO, WORLD");
 }
 
 int main(int argc, char **argv)
